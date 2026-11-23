@@ -1,0 +1,17 @@
+{
+  "name": "qingya-device-studio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "青芽 · ESP32-S3 AMOLED simulator",
+  "main": "src/electron/main.js",
+  "scripts": {
+    "start": "electron .",
+    "test:ui": "electron . --smoke-test",
+    "test": "node --test test/*.test.js"
+  },
+  "devDependencies": {
+    "@electron/packager": "^20.3.0",
+    "electron": "^45.4.1",
+    "prettier": "^3.10.1"
+  }
+}

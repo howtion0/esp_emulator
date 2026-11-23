@@ -1,0 +1,11 @@
+node_modules
+**/build/
+**/managed_components/
+output/
+runtime/
+artifacts/
+logs/
+qemu-source/
+desktop/dist/
+.DS_Store
+._*

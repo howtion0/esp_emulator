@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'"
+    />
+    <title>青芽 · 设备实验室</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="ambient a"></div>
+    <div class="ambient b"></div>
+    <div class="titlebar">
+      <span>青芽 / 设备实验室</span
+      ><span class="title-note">DEMO · 施工中</span>
+    </div>
+    <div class="app">
+      <aside class="sidebar glass">
+        <div class="brand">
+          <div class="brand-icon">
+            <svg viewBox="0 0 32 32">
+              <path
+                d="M24 6C10 4 5 12 9 21c9 6 19-1 15-15Z"
+                fill="currentColor"
+              />
+              <path
+                d="M7 27 20 12"
+                stroke="#fff"
+                stroke-width="2.3"
+                stroke-linecap="round"
+              />
+            </svg>
+          </div>
+          <div>
+            <h1>青芽</h1>
+            <span>Device Studio</span>
+          </div>
+        </div>
+        <div class="section-label">我的设备<span>01</span></div>
+        <div class="board">
+          <span class="board-icon">▣</span>
+          <div><strong>微雪 AMOLED</strong><small>1.8″ Touch · V2</small></div>
+          <i class="dot"></i>
+        </div>
+        <div class="section-label firmware-label">固件库<span>03</span></div>
+        <button class="firmware selected" data-key="daisy">
+          <span class="flower-symbol daisy">✺</span
+          ><span><strong>小雏菊</strong><small>圆瓣 · 轻风摇曳</small></span
+          ><span class="selection">✓</span>
+        </button>
+        <button class="firmware" data-key="rose">
+          <span class="flower-symbol rose">✿</span
+          ><span
+            ><strong>极光玫瑰</strong><small>蓝白花瓣 · 金色花心</small></span
+          ><span class="selection">✓</span>
+        </button>
+        <button class="firmware" data-key="factory">
+          <span class="flower-symbol factory">▦</span
+          ><span
+            ><strong>出厂桌面</strong><small>Brookesia · 系统应用</small></span
+          ><span class="selection">✓</span>
+        </button>
+        <div id="imported-firmware" class="imported-firmware"></div>
+        <button id="import-firmware" class="import-button">＋ 导入固件</button>
+        <p class="import-hint">
+          完整 Flash BIN / flasher_args.json<br />当前支持微雪 1.8″ V2 板型
+        </p>
+        <div class="sidebar-bottom">
+          <div class="local-badge">
+            <span>◈</span> 本地运行 <span class="muted">/</span> 无需联网
+          </div>
+          <button id="folder" class="folder">
+            打开项目文件夹 <span>↗</span>
+          </button>
+        </div>
+      </aside>
+      <main>
+        <header>
+          <div>
+            <div class="eyebrow">LIVE PREVIEW</div>
+            <h2 id="name">一朵小雏菊<span>实时交互</span></h2>
+            <p id="subtitle">让花开在桌面上，也让每一次触碰都有回应。</p>
+          </div>
+          <span class="state" id="state"><i></i><span>准备启动</span></span>
+        </header>
+        <section class="workspace glass">
+          <div class="workspace-top">
+            <span><i class="mini-dot"></i> AMOLED · 368 × 448</span
+            ><button
+              class="icon-button"
+              id="capture"
+              title="保存屏幕截图"
+              aria-label="保存屏幕截图"
+            >
+              <svg viewBox="0 0 24 24">
+                <path d="M8 6 9.5 4h5L16 6h4v14H4V6Z" />
+                <circle cx="12" cy="12.5" r="3.5" />
+              </svg>
+            </button>
+          </div>
+          <div class="device-area">
+            <div class="device-shell">
+              <div class="device-screen">
+                <canvas id="screen" width="368" height="448"></canvas>
+                <div id="placeholder">
+                  正在唤醒设备<span>加载固件与显示屏…</span>
+                </div>
+              </div>
+              <i class="case-button case-boot" aria-hidden="true"></i
+              ><i class="case-usb" aria-hidden="true"></i
+              ><i class="case-button case-power" aria-hidden="true"></i>
+            </div>
+            <div class="shadow"></div>
+          </div>
+          <div class="gesture">
+            <span class="gesture-icon">◉</span
+            ><span id="gesture"
+              >长按收拢<span class="divider">·</span>松手绽放<span
+                class="divider"
+                >·</span
+              >拖动转向</span
+            >
+          </div>
+        </section>
+        <div class="bottom-controls">
+          <div>
+            <span class="pulse"></span><span id="detail">准备连接模拟设备</span>
+          </div>
+          <div class="actions">
+            <button id="reset" class="secondary"><span>↻</span> 重启</button
+            ><button id="toggle" class="primary">
+              <span>▶</span> 启动设备
+            </button>
+          </div>
+        </div>
+      </main>
+      <aside class="inspector">
+        <div class="inspector-title">设备概览<span>◌</span></div>
+        <div class="metrics glass">
+          <div class="metric-main">
+            <span id="fps">—</span><span>FPS</span><small>模拟运行帧率</small>
+          </div>
+          <div class="metric-grid">
+            <div>
+              <small>内存</small><strong>8 <span>MB</span></strong>
+            </div>
+            <div>
+              <small>Flash</small><strong>16 <span>MB</span></strong>
+            </div>
+          </div>
+          <div class="metric-foot">ESP32-S3 <span>双核 · RGB565</span></div>
+        </div>
+        <div class="interaction glass">
+          <div class="card-label">
+            触摸反馈 <span id="touch-state">未触碰</span>
+          </div>
+          <div class="touch-map">
+            <div class="cross horizontal"></div>
+            <div class="cross vertical"></div>
+            <div id="touch-point"></div>
+          </div>
+          <div class="coordinates">
+            <span>X <b id="touch-x">—</b></span
+            ><span>Y <b id="touch-y">—</b></span>
+          </div>
+        </div>
+        <div class="log-card glass">
+          <div class="card-label">运行记录<span id="log-count">LIVE</span></div>
+          <pre id="logs">等待固件输出…</pre>
+          <div class="log-foot">保留完整日志到 output/desktop</div>
+        </div>
+        <div class="disclaimer">
+          模拟帧率不代表实体板性能。<br />电池、音频与传感器支持范围见项目说明。
+        </div>
+      </aside>
+    </div>
+    <div id="toast" role="status"></div>
+    <script src="renderer.js"></script>
+  </body>
+</html>
